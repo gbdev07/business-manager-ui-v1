@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" role="img" aria-labelledby="title">
+  <title id="title">KODA — símbolo Modular para fundo escuro</title>
+  <g transform="translate(0 0) scale(1.3333)">
+    <path fill="#F4F1E8" d="M0 0H24V6H0Z"/>
+    <path fill="#F4F1E8" d="M0 9H15V15H0Z"/>
+    <path fill="#526B50" d="M18 9H24V15H18Z"/>
+    <path fill="#F4F1E8" d="M0 18H24V24H0Z"/>
+  </g>
+</svg>

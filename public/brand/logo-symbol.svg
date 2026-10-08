@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" role="img" aria-labelledby="title">
+  <title id="title">KODA — símbolo Estrutura</title>
+  <g transform="translate(0 0) scale(1.3333)">
+    <path fill="#171917" d="M0 0H24V8H8V24H0Z"/>
+    <path fill="#526B50" d="M16 16H24V24H16Z"/>
+  </g>
+</svg>

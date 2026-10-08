@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" role="img" aria-labelledby="title">
+  <title id="title">KODA — favicon Estrutura</title>
+  <rect width="32" height="32" rx="6" fill="#171917"/>
+  <g transform="translate(4 4) scale(1)">
+    <path fill="#F4F1E8" d="M0 0H24V8H8V24H0Z"/>
+    <path fill="#526B50" d="M16 16H24V24H16Z"/>
+  </g>
+</svg>

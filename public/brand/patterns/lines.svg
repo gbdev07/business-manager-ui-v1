@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 48" fill="none" role="img" aria-labelledby="title">
+  <title id="title">Padrão de linhas KODA</title>
+  <path stroke="#171917" stroke-width="2" d="M0 8H80M0 24H52M0 40H80"/>
+  <path fill="#526B50" d="M60 20H72V28H60Z"/>
+</svg>

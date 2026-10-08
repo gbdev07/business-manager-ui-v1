@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" role="img" aria-labelledby="title">
+  <title id="title">Padrão de módulos KODA</title>
+  <path fill="#171917" d="M8 8H16V16H8Z"/>
+  <path fill="#526B50" d="M40 40H48V48H40Z"/>
+  <path fill="#171917" fill-opacity="0.35" d="M40 12H44V16H40Z"/>
+  <path fill="#171917" fill-opacity="0.35" d="M16 44H20V48H16Z"/>
+</svg>

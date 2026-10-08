@@ -1,0 +1,120 @@
+/*
+ * Tokens da KODA.
+ * A paleta oficial é grafite, off-white e verde natural.
+ * As cores semânticas mudam com [data-theme] sem reescrever componentes.
+ */
+
+:root {
+  --koda-graphite: #171917;
+  --koda-off-white: #f4f1e8;
+  --koda-natural-green: #526b50;
+
+  --koda-green-hover: #5a7258;
+  --koda-green-active: #415440;
+  --koda-green-text-dark: #8b9a85;
+  --koda-green-wash: #e4eae2;
+
+  --koda-neutral-500: #5c5952;
+  --koda-neutral-300: #b7b2a6;
+  --koda-border: #d2cdbf;
+  --koda-white: #ffffff;
+
+  --koda-success: #1f6b45;
+  --koda-warning: #8a5a2a;
+  --koda-danger: #8e3b32;
+  --koda-success-wash: #e5f0e8;
+  --koda-warning-wash: #f6ede3;
+  --koda-danger-wash: #f8e8e6;
+  --koda-success-foreground: #1f6b45;
+  --koda-warning-foreground: #8a5a2a;
+  --koda-danger-foreground: #8e3b32;
+
+  --koda-shadow-sm: 0 1px 2px rgb(23 25 23 / 0.06);
+  --koda-shadow-md: 0 16px 40px rgb(23 25 23 / 0.1);
+
+  --background: var(--koda-off-white);
+  --foreground: var(--koda-graphite);
+  --primary: var(--koda-natural-green);
+  --primary-hover: var(--koda-green-hover);
+  --primary-active: var(--koda-green-active);
+  --primary-foreground: var(--koda-off-white);
+  --primary-text: var(--koda-natural-green);
+  --surface: #e9e6dc;
+  --surface-raised: #fbf9f4;
+  --muted: var(--koda-neutral-500);
+  --subtle: var(--koda-neutral-300);
+  --border: var(--koda-border);
+  --ring: var(--koda-natural-green);
+  --success: var(--koda-success);
+  --warning: var(--koda-warning);
+  --danger: var(--koda-danger);
+  --success-wash: var(--koda-success-wash);
+  --warning-wash: var(--koda-warning-wash);
+  --danger-wash: var(--koda-danger-wash);
+  --success-foreground: var(--koda-success-foreground);
+  --warning-foreground: var(--koda-warning-foreground);
+  --danger-foreground: var(--koda-danger-foreground);
+  --nav: var(--koda-graphite);
+  --nav-foreground: var(--koda-off-white);
+
+  --font-size-caption: 0.75rem;
+  --font-size-small: 0.875rem;
+  --font-size-body: 1.0625rem;
+  --font-size-h3: 1.5rem;
+  --font-size-h2: clamp(1.75rem, 3vw, 2.25rem);
+  --font-size-h1: clamp(2.25rem, 4vw, 3.25rem);
+  --font-size-display: clamp(2.75rem, 6vw, 5.15rem);
+
+  --leading-display: 1.02;
+  --leading-tight: 1.12;
+  --leading-body: 1.65;
+  --leading-small: 1.5;
+
+  --tracking-display: -0.035em;
+  --tracking-title: -0.03em;
+  --tracking-eyebrow: 0.18em;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+
+  --bp-sm: 40rem;
+  --bp-md: 48rem;
+  --bp-lg: 64rem;
+  --bp-xl: 80rem;
+
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --background: var(--koda-graphite);
+  --foreground: var(--koda-off-white);
+  --primary-text: var(--koda-green-text-dark);
+  --surface: #20221f;
+  --surface-raised: #292a28;
+  --muted: #c4bfb4;
+  --subtle: #8e8a82;
+  --border: #444744;
+  --nav: #101210;
+  --koda-green-wash: #243026;
+  --success-wash: #1a2c22;
+  --warning-wash: #2c241c;
+  --danger-wash: #2c1c1a;
+  --success-foreground: #b7dcc8;
+  --warning-foreground: #efd3b8;
+  --danger-foreground: #f3c2bb;
+  --koda-shadow-sm: 0 1px 2px rgb(0 0 0 / 0.35);
+  --koda-shadow-md: 0 16px 40px rgb(0 0 0 / 0.4);
+  color-scheme: dark;
+}

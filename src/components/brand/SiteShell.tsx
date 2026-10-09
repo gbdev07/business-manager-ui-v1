@@ -1,6 +1,7 @@
 "use client";
 
 import { Menu, X } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { sections } from "@/lib/brand";
 import { cx } from "@/lib/cx";
@@ -84,6 +85,9 @@ export function SiteShell({ children }: { children: ReactNode }) {
       <header className="sticky top-0 z-40 flex items-center justify-between border-b border-white/10 bg-graphite px-4 py-3 text-ivory lg:hidden">
         <Logo variant="on-dark" className="h-7 w-auto" alt="KODA" />
         <div className="flex items-center gap-1">
+          <Link href="/login" className="px-2 text-sm text-ivory/80 hover:text-ivory">
+            Entrar
+          </Link>
           <ThemeToggle tone="inverse" />
           <button
             type="button"
@@ -130,8 +134,10 @@ export function SiteShell({ children }: { children: ReactNode }) {
           <nav aria-label="Seções da identidade" className="mt-10 grid gap-1 px-3">
             {navLinks}
           </nav>
-          <div className="mt-auto flex items-center justify-between px-4 py-5">
-            <p className="text-xs tracking-[0.14em] text-ivory/55 uppercase">Tema</p>
+          <div className="mt-auto flex items-center justify-between gap-3 px-4 py-5">
+            <Link href="/login" className="text-sm text-ivory/80 hover:text-ivory">
+              Entrar
+            </Link>
             <ThemeToggle tone="inverse" />
           </div>
         </aside>

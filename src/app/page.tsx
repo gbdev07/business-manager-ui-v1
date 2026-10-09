@@ -1,26 +1,18 @@
-import { SiteShell } from "@/components/brand/SiteShell";
-import { ApplicationsSection } from "@/components/sections/ApplicationsSection";
-import { ComponentsSection } from "@/components/sections/ComponentsSection";
-import { ConceptSection } from "@/components/sections/ConceptSection";
-import { GraphicsSection } from "@/components/sections/GraphicsSection";
-import { HeroSection } from "@/components/sections/HeroSection";
-import { LogosSection } from "@/components/sections/LogosSection";
-import { PaletteSection } from "@/components/sections/PaletteSection";
-import { TypographySection } from "@/components/sections/TypographySection";
+import { Suspense } from "react";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+import { ACCESS_COOKIE, REFRESH_COOKIE } from "@/lib/auth/cookies";
 
 export default function Home() {
   return (
-    <SiteShell>
-      <main>
-        <HeroSection />
-        <ConceptSection />
-        <LogosSection />
-        <PaletteSection />
-        <TypographySection />
-        <GraphicsSection />
-        <ApplicationsSection />
-        <ComponentsSection />
-      </main>
-    </SiteShell>
+    <Suspense>
+      <HomeRedirect />
+    </Suspense>
   );
+}
+
+async function HomeRedirect() {
+  const jar = await cookies();
+  redirect(jar.get(ACCESS_COOKIE) || jar.get(REFRESH_COOKIE) ? "/dashboard" : "/login");
+  return null;
 }

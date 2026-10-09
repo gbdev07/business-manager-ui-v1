@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { useNotify, useSession } from "@/components/app/providers";
 import { StatusBadge } from "@/components/data-display/StatusBadge";
 import { ErrorState, ForbiddenState, LoadingState } from "@/components/feedback/States";
+import { Checkbox } from "@/components/forms/Fields";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
@@ -125,10 +126,7 @@ function HoursForm({ canManage }: { canManage: boolean }) {
             <p className="text-sm font-medium">{weekdayLabel[day]}</p>
             <TextField id={`${day}-open`} label="Abre" type="time" disabled={!canManage || value.closed} value={value.open ?? ""} onChange={(event) => setHours({ ...current, [day]: { ...value, open: event.target.value } })} />
             <TextField id={`${day}-close`} label="Fecha" type="time" disabled={!canManage || value.closed} value={value.close ?? ""} onChange={(event) => setHours({ ...current, [day]: { ...value, close: event.target.value } })} />
-            <label className="flex items-center gap-2 pb-3 text-sm">
-              <input type="checkbox" disabled={!canManage} checked={Boolean(value.closed)} onChange={(event) => setHours({ ...current, [day]: { ...value, closed: event.target.checked } })} />
-              Fechado
-            </label>
+            <Checkbox className="pb-3" label="Fechado" disabled={!canManage} checked={Boolean(value.closed)} onChange={(event) => setHours({ ...current, [day]: { ...value, closed: event.target.checked } })} />
           </div>
         );
       })}

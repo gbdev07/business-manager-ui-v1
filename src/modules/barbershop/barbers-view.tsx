@@ -9,13 +9,13 @@ import { PaginationBar } from "@/components/data-display/PaginationBar";
 import { ActiveBadge } from "@/components/data-display/StatusBadge";
 import { ConfirmDialog } from "@/components/feedback/ConfirmDialog";
 import { EmptyState, ErrorState, ForbiddenState, LoadingState } from "@/components/feedback/States";
-import { SelectField } from "@/components/forms/Fields";
+import { Checkbox, SelectField } from "@/components/forms/Fields";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Dialog } from "@/components/overlay/Dialog";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { DataTable } from "@/components/ui/DataTable";
-import { TextField } from "@/components/ui/TextField";
+import { SearchField, TextField } from "@/components/ui/TextField";
 import { api, toSearch } from "@/lib/api/client";
 import { ApiError } from "@/lib/api/errors";
 import { omitEmpty } from "@/lib/format";
@@ -69,7 +69,7 @@ export function BarbersView() {
     <section className="grid gap-6">
       <PageHeader title="Profissionais" description="Barbeiros do módulo de barbearia. Um profissional pode ser associado a um usuário já existente." actions={canManage ? <Button onClick={() => setEditing("new")}>Novo profissional</Button> : null} />
       <form className="flex gap-2" onSubmit={(event) => { event.preventDefault(); listing.setParams({ q: String(new FormData(event.currentTarget).get("q") ?? "") || null }); }}>
-        <input key={listing.q} name="q" defaultValue={listing.q} aria-label="Buscar profissionais" placeholder="Nome" className="h-11 w-full max-w-sm rounded-sm border border-border bg-surface-raised px-3" />
+        <SearchField key={listing.q} name="q" defaultValue={listing.q} aria-label="Buscar profissionais" placeholder="Nome" className="max-w-sm" />
         <Button type="submit" variant="secondary">Buscar</Button>
       </form>
       {query.isLoading ? <LoadingState /> : null}
@@ -83,7 +83,7 @@ export function BarbersView() {
             { key: "days", header: "Dias", render: (row) => row.workDays.map((day) => weekdayLabel[day] ?? day).join(", ") || "—" },
             { key: "hours", header: "Horário", render: (row) => row.workStartTime && row.workEndTime ? `${row.workStartTime}–${row.workEndTime}` : "—" },
             { key: "status", header: "Status", render: (row) => <ActiveBadge active={row.isActive} /> },
-            { key: "actions", header: "Ações", render: (row) => canManage ? <div className="flex gap-2"><Button size="sm" variant="secondary" onClick={() => setEditing(row)}>Editar</Button><Button size="sm" variant="ghost" onClick={() => setConfirm(row)}>{row.isActive ? "Desativar" : "Ativar"}</Button></div> : "—" },
+            { key: "actions", header: "Ações", render: (row) => canManage ? <div className="flex gap-2"><Button size="sm" variant="secondary" onClick={() => setEditing(row)}>Editar</Button><Button size="sm" variant="secondary" onClick={() => setConfirm(row)}>{row.isActive ? "Desativar" : "Ativar"}</Button></div> : "—" },
           ]} />
           <PaginationBar page={query.data.meta.page} totalPages={query.data.meta.totalPages} total={query.data.meta.total} onPage={(page) => listing.setParams({ page: String(page) })} />
         </Card>
@@ -144,18 +144,16 @@ function BarberDialog({ barber, onClose }: { barber: Barber | null; onClose: () 
           <legend className="text-sm font-medium">Dias de trabalho</legend>
           <div className="flex flex-wrap gap-3">
             {weekdays.map((day) => (
-              <label key={day} className="flex items-center gap-2 text-sm">
-                <input
-                  type="checkbox"
-                  checked={selectedDays.includes(day)}
-                  onChange={(event) => {
-                    const next = event.target.checked ? [...selectedDays, day] : selectedDays.filter((item) => item !== day);
-                    setSelectedDays(next);
-                    form.setValue("workDays", next);
-                  }}
-                />
-                {weekdayLabel[day]}
-              </label>
+              <Checkbox
+                key={day}
+                label={weekdayLabel[day]}
+                checked={selectedDays.includes(day)}
+                onChange={(event) => {
+                  const next = event.target.checked ? [...selectedDays, day] : selectedDays.filter((item) => item !== day);
+                  setSelectedDays(next);
+                  form.setValue("workDays", next);
+                }}
+              />
             ))}
           </div>
         </fieldset>

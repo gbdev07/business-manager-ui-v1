@@ -8,13 +8,13 @@ import { useNotify, useSession } from "@/components/app/providers";
 import { PaginationBar } from "@/components/data-display/PaginationBar";
 import { ActiveBadge } from "@/components/data-display/StatusBadge";
 import { EmptyState, ErrorState, ForbiddenState, LoadingState } from "@/components/feedback/States";
-import { TextAreaField } from "@/components/forms/Fields";
+import { SelectField, TextAreaField } from "@/components/forms/Fields";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Dialog } from "@/components/overlay/Dialog";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { DataTable } from "@/components/ui/DataTable";
-import { TextField } from "@/components/ui/TextField";
+import { SearchField, TextField } from "@/components/ui/TextField";
 import { api, toSearch } from "@/lib/api/client";
 import { ApiError } from "@/lib/api/errors";
 import { formatMoney, omitEmpty } from "@/lib/format";
@@ -123,16 +123,16 @@ function ServiceDialog({ service, onClose }: { service: CatalogService | null; o
 
 function SearchStatus({ q, active, label, onSearch, onActive }: { q: string; active: string; label: string; onSearch: (value: string | null) => void; onActive: (value: string | null) => void }) {
   return (
-    <div className="flex flex-col gap-3 sm:flex-row">
+    <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
       <form className="flex flex-1 gap-2" onSubmit={(event) => { event.preventDefault(); onSearch(String(new FormData(event.currentTarget).get("q") ?? "") || null); }}>
-        <input key={q} name="q" defaultValue={q} aria-label={label} placeholder={label} className="h-11 w-full rounded-sm border border-border bg-surface-raised px-3" />
+        <SearchField key={q} name="q" defaultValue={q} aria-label={label} placeholder={label} />
         <Button type="submit" variant="secondary">Buscar</Button>
       </form>
-      <select aria-label="Status" className="h-11 rounded-sm border border-border bg-surface-raised px-3" value={active} onChange={(event) => onActive(event.target.value || null)}>
+      <SelectField id="service-status" aria-label="Status" className="w-full sm:w-44" value={active} onChange={(event) => onActive(event.target.value || null)}>
         <option value="">Todos</option>
         <option value="true">Ativos</option>
         <option value="false">Inativos</option>
-      </select>
+      </SelectField>
     </div>
   );
 }

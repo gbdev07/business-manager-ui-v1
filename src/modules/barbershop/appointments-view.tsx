@@ -77,20 +77,14 @@ export function AppointmentsView() {
           <Button variant={mode === "day" ? "primary" : "secondary"} onClick={() => { setMode("day"); setPage(1); }}>Dia</Button>
           <Button variant={mode === "week" ? "primary" : "secondary"} onClick={() => { setMode("week"); setPage(1); }}>Semana</Button>
         </div>
-        <label className="grid gap-2 text-sm font-medium">
-          Profissional
-          <select className="h-11 rounded-sm border border-border bg-surface-raised px-3" value={barberId} onChange={(event) => { setBarberId(event.target.value); setPage(1); }}>
-            <option value="">Todos</option>
-            {barbers.data?.data.map((barber) => <option key={barber.id} value={barber.id}>{barber.name}</option>)}
-          </select>
-        </label>
-        <label className="grid gap-2 text-sm font-medium">
-          Status
-          <select className="h-11 rounded-sm border border-border bg-surface-raised px-3" value={status} onChange={(event) => { setStatus(event.target.value); setPage(1); }}>
-            <option value="">Todos</option>
-            {statuses.map((item) => <option key={item} value={item}>{appointmentStatusLabel[item]}</option>)}
-          </select>
-        </label>
+        <SelectField id="agenda-barber" label="Profissional" className="w-full sm:w-52" value={barberId} onChange={(event) => { setBarberId(event.target.value); setPage(1); }}>
+          <option value="">Todos</option>
+          {barbers.data?.data.map((barber) => <option key={barber.id} value={barber.id}>{barber.name}</option>)}
+        </SelectField>
+        <SelectField id="agenda-status" label="Status" className="w-full sm:w-44" value={status} onChange={(event) => { setStatus(event.target.value); setPage(1); }}>
+          <option value="">Todos</option>
+          {statuses.map((item) => <option key={item} value={item}>{appointmentStatusLabel[item]}</option>)}
+        </SelectField>
       </div>
       {query.isLoading ? <LoadingState /> : null}
       {query.isError ? <ErrorState title="Não foi possível carregar a agenda." description={query.error instanceof ApiError ? query.error.message : "Falha de conexão."} onRetry={() => query.refetch()} /> : null}
@@ -110,9 +104,9 @@ export function AppointmentsView() {
                 <div className="flex flex-wrap gap-2">
                   {row.status === "SCHEDULED" ? <Button size="sm" variant="secondary" onClick={() => action.mutate({ id: row.id, kind: "confirm" })}>Confirmar</Button> : null}
                   <Button size="sm" variant="secondary" onClick={() => action.mutate({ id: row.id, kind: "complete" })}>Concluir</Button>
-                  <Button size="sm" variant="ghost" onClick={() => setReschedule(row)}>Remarcar</Button>
-                  {new Date(row.startsAt).getTime() <= Date.now() ? <Button size="sm" variant="ghost" onClick={() => action.mutate({ id: row.id, kind: "no-show" })}>Falta</Button> : null}
-                  <Button size="sm" variant="ghost" onClick={() => { setCancel(row); setReason(""); }}>Cancelar</Button>
+                  <Button size="sm" variant="secondary" onClick={() => setReschedule(row)}>Remarcar</Button>
+                  {new Date(row.startsAt).getTime() <= Date.now() ? <Button size="sm" variant="secondary" onClick={() => action.mutate({ id: row.id, kind: "no-show" })}>Falta</Button> : null}
+                  <Button size="sm" variant="secondary" onClick={() => { setCancel(row); setReason(""); }}>Cancelar</Button>
                 </div>
               ) : "—",
             },

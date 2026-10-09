@@ -80,10 +80,10 @@ export function PaymentsView() {
           {unavailable.map((gateway) => paymentGatewayLabel[gateway.gateway]).join(", ")} ainda não estão integrados. Nenhuma cobrança será simulada nesses canais.
         </Alert>
       ) : null}
-      <select aria-label="Status do pagamento" className="h-11 max-w-xs rounded-sm border border-border bg-surface-raised px-3" value={listing.status} onChange={(event) => listing.setParams({ status: event.target.value || null })}>
+      <SelectField id="payment-status" aria-label="Status do pagamento" className="max-w-xs" value={listing.status} onChange={(event) => listing.setParams({ status: event.target.value || null })}>
         <option value="">Todos os status</option>
         {Object.entries(paymentStatusLabel).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
-      </select>
+      </SelectField>
       {query.isLoading ? <LoadingState /> : null}
       {query.isError ? <ErrorState title="Não foi possível carregar os pagamentos." description={query.error instanceof ApiError ? query.error.message : "Falha de conexão."} onRetry={() => query.refetch()} /> : null}
       {query.data?.data.length === 0 ? <EmptyState title="Nenhum pagamento encontrado" description="Os pagamentos registrados aparecem aqui." /> : null}
@@ -103,7 +103,7 @@ export function PaymentsView() {
                   {row.status === "PENDING" && row.gateway === "MANUAL" ? <Button size="sm" variant="secondary" onClick={() => action.mutate({ id: row.id, kind: "confirm" })}>Confirmar</Button> : null}
                   {row.gateway !== "MANUAL" ? <Button size="sm" variant="secondary" onClick={() => action.mutate({ id: row.id, kind: "sync" })}>Sincronizar</Button> : null}
                   {row.checkoutUrl ? <a className="text-sm text-primary-text" href={row.checkoutUrl} target="_blank" rel="noreferrer">Checkout</a> : null}
-                  {row.status === "PENDING" ? <Button size="sm" variant="ghost" onClick={() => setCancelId(row.id)}>Cancelar</Button> : null}
+                  {row.status === "PENDING" ? <Button size="sm" variant="secondary" onClick={() => setCancelId(row.id)}>Cancelar</Button> : null}
                 </div>
               ) : "—",
             },

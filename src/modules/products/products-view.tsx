@@ -8,13 +8,13 @@ import { useNotify, useSession } from "@/components/app/providers";
 import { PaginationBar } from "@/components/data-display/PaginationBar";
 import { ActiveBadge } from "@/components/data-display/StatusBadge";
 import { EmptyState, ErrorState, ForbiddenState, LoadingState } from "@/components/feedback/States";
-import { TextAreaField } from "@/components/forms/Fields";
+import { SelectField, TextAreaField } from "@/components/forms/Fields";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Dialog } from "@/components/overlay/Dialog";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { DataTable } from "@/components/ui/DataTable";
-import { TextField } from "@/components/ui/TextField";
+import { SearchField, TextField } from "@/components/ui/TextField";
 import { api, toSearch } from "@/lib/api/client";
 import { ApiError } from "@/lib/api/errors";
 import { formatMoney, omitEmpty } from "@/lib/format";
@@ -41,16 +41,16 @@ export function ProductsView() {
   return (
     <section className="grid gap-6">
       <PageHeader title="Produtos" description="Catálogo compartilhado de produtos." actions={canManage ? <Button onClick={() => setEditing("new")}>Novo produto</Button> : null} />
-      <div className="flex flex-col gap-3 sm:flex-row">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
         <form className="flex flex-1 gap-2" onSubmit={(event) => { event.preventDefault(); listing.setParams({ q: String(new FormData(event.currentTarget).get("q") ?? "") || null }); }}>
-          <input key={listing.q} name="q" defaultValue={listing.q} aria-label="Buscar produtos" placeholder="Nome ou SKU" className="h-11 w-full rounded-sm border border-border bg-surface-raised px-3" />
+          <SearchField key={listing.q} name="q" defaultValue={listing.q} aria-label="Buscar produtos" placeholder="Nome ou SKU" />
           <Button type="submit" variant="secondary">Buscar</Button>
         </form>
-        <select aria-label="Status" className="h-11 rounded-sm border border-border bg-surface-raised px-3" value={listing.active} onChange={(event) => listing.setParams({ active: event.target.value || null })}>
+        <SelectField id="product-status" aria-label="Status" className="w-full sm:w-44" value={listing.active} onChange={(event) => listing.setParams({ active: event.target.value || null })}>
           <option value="">Todos</option>
           <option value="true">Ativos</option>
           <option value="false">Inativos</option>
-        </select>
+        </SelectField>
       </div>
       {query.isLoading ? <LoadingState /> : null}
       {query.isError ? <ErrorState title="Não foi possível carregar os produtos." description={query.error instanceof ApiError ? query.error.message : "Falha de conexão."} onRetry={() => query.refetch()} /> : null}

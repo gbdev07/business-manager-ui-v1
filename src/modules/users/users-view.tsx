@@ -15,7 +15,7 @@ import { Dialog } from "@/components/overlay/Dialog";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { DataTable } from "@/components/ui/DataTable";
-import { TextField } from "@/components/ui/TextField";
+import { SearchField, TextField } from "@/components/ui/TextField";
 import { api, toSearch } from "@/lib/api/client";
 import { ApiError } from "@/lib/api/errors";
 import { formatDateTime } from "@/lib/format";
@@ -83,7 +83,7 @@ export function UsersView() {
                 render: (row) => canManage ? (
                   <div className="flex gap-2">
                     <Button size="sm" variant="secondary" onClick={() => setEditing(row)}>Editar</Button>
-                    <Button size="sm" variant="ghost" disabled={row.id === user.id} onClick={() => setConfirm(row)}>{row.isActive ? "Desativar" : "Ativar"}</Button>
+                    <Button size="sm" variant="secondary" disabled={row.id === user.id} onClick={() => setConfirm(row)}>{row.isActive ? "Desativar" : "Ativar"}</Button>
                   </div>
                 ) : "—",
               },
@@ -192,16 +192,16 @@ function RoleSelect({ roles, error, ...props }: { roles: RoleDefinition[]; error
 
 function FilterRow({ q, active, onSearch, onActive }: { q: string; active: string; onSearch: (value: string | null) => void; onActive: (value: string | null) => void }) {
   return (
-    <div className="flex flex-col gap-3 sm:flex-row">
+    <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
       <form className="flex flex-1 gap-2" onSubmit={(event) => { event.preventDefault(); onSearch(String(new FormData(event.currentTarget).get("q") ?? "") || null); }}>
-        <input key={q} name="q" defaultValue={q} aria-label="Buscar usuários" placeholder="Nome ou e-mail" className="h-11 w-full rounded-sm border border-border bg-surface-raised px-3" />
+        <SearchField key={q} name="q" defaultValue={q} aria-label="Buscar usuários" placeholder="Nome ou e-mail" />
         <Button type="submit" variant="secondary">Buscar</Button>
       </form>
-      <select className="h-11 rounded-sm border border-border bg-surface-raised px-3" value={active} aria-label="Status" onChange={(event) => onActive(event.target.value || null)}>
+      <SelectField id="user-status" aria-label="Status" className="w-full sm:w-44" value={active} onChange={(event) => onActive(event.target.value || null)}>
         <option value="">Todos</option>
         <option value="true">Ativos</option>
         <option value="false">Inativos</option>
-      </select>
+      </SelectField>
     </div>
   );
 }

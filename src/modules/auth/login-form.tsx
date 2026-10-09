@@ -43,7 +43,8 @@ export function LoginForm() {
   return (
     <main className="grid min-h-screen place-items-center bg-background px-4 py-10">
       <div className="w-full max-w-md">
-        <Logo className="h-8 w-auto" alt="KODA" />
+        <Logo variant="horizontal" className="theme-icon-light h-8 w-auto" alt="KODA" />
+        <Logo variant="on-dark" className="theme-icon-dark h-8 w-auto" alt="" />
         <h1 className="mt-6 text-2xl font-semibold tracking-tight">Entrar</h1>
         <p className="mt-1 text-sm text-muted">Acesse o negócio vinculado à sua conta.</p>
         <Card className="mt-6">

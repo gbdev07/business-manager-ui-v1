@@ -9,7 +9,7 @@ import { PaginationBar } from "@/components/data-display/PaginationBar";
 import { ActiveBadge, StatusBadge } from "@/components/data-display/StatusBadge";
 import { ConfirmDialog } from "@/components/feedback/ConfirmDialog";
 import { EmptyState, ErrorState, ForbiddenState, LoadingState } from "@/components/feedback/States";
-import { SelectField, TextAreaField } from "@/components/forms/Fields";
+import { Checkbox, SelectField, TextAreaField } from "@/components/forms/Fields";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Dialog } from "@/components/overlay/Dialog";
 import { Button } from "@/components/ui/Button";
@@ -117,10 +117,10 @@ export function SubscriptionsView() {
       <div className="grid gap-3">
         <div className="flex items-center justify-between gap-3">
           <h2 className="text-lg font-semibold">Contratos</h2>
-          <select aria-label="Status da assinatura" className="h-11 rounded-sm border border-border bg-surface-raised px-3" value={listing.status} onChange={(event) => listing.setParams({ status: event.target.value || null })}>
+          <SelectField id="subscription-status" aria-label="Status da assinatura" className="w-full sm:w-52" value={listing.status} onChange={(event) => listing.setParams({ status: event.target.value || null })}>
             <option value="">Todos</option>
             {Object.entries(subscriptionStatusLabel).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
-          </select>
+          </SelectField>
         </div>
         {subscriptions.isLoading ? <LoadingState /> : null}
         {subscriptions.isError ? <ErrorState title="Não foi possível carregar as assinaturas." description={subscriptions.error instanceof ApiError ? subscriptions.error.message : "Falha de conexão."} onRetry={() => subscriptions.refetch()} /> : null}
@@ -140,7 +140,7 @@ export function SubscriptionsView() {
                 render: (row) => canManage ? (
                   <div className="flex gap-2">
                     {canRenew(row.status) ? <Button size="sm" variant="secondary" onClick={() => mutate.mutate({ kind: "renew", id: row.id })}>Renovar período</Button> : null}
-                    {canCancel(row.status) ? <Button size="sm" variant="ghost" onClick={() => setCancelId(row.id)}>Cancelar</Button> : null}
+                    {canCancel(row.status) ? <Button size="sm" variant="secondary" onClick={() => setCancelId(row.id)}>Cancelar</Button> : null}
                   </div>
                 ) : "—",
               },
@@ -224,10 +224,7 @@ function SubscriptionDialog({ onClose }: { onClose: () => void }) {
           {customers.data?.data.map((customer) => <option key={customer.id} value={customer.id}>{customer.name}</option>)}
         </SelectField>
         <TextField id="sub-start" label="Início" type="date" hint="Opcional. Sem data, a API usa o momento atual." {...form.register("startDate")} />
-        <label className="flex items-center gap-2 text-sm">
-          <input type="checkbox" {...form.register("autoRenew")} />
-          Registrar preferência de renovação
-        </label>
+        <Checkbox label="Registrar preferência de renovação" {...form.register("autoRenew")} />
         <Button type="submit" disabled={mutation.isPending}>{mutation.isPending ? "Salvando…" : "Criar assinatura"}</Button>
       </form>
     </Dialog>

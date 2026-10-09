@@ -79,10 +79,10 @@ export function CommissionsView() {
       <div className="grid gap-3">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="text-lg font-semibold">Lançamentos</h2>
-          <select aria-label="Status da comissão" className="h-11 rounded-sm border border-border bg-surface-raised px-3" value={listing.status} onChange={(event) => listing.setParams({ status: event.target.value || null })}>
+          <SelectField id="commission-status" aria-label="Status da comissão" className="w-full sm:w-48" value={listing.status} onChange={(event) => listing.setParams({ status: event.target.value || null })}>
             <option value="">Todos</option>
             {Object.entries(commissionStatusLabel).map(([value, label]) => <option key={value} value={value}>{label}</option>)}
-          </select>
+          </SelectField>
         </div>
         {commissions.data ? (
           <p className="text-sm text-muted">Pendente: {formatMoney(commissions.data.totals.pending)} · Pago: {formatMoney(commissions.data.totals.paid)}</p>
@@ -105,7 +105,7 @@ export function CommissionsView() {
                 render: (row) => canManage && row.status === "PENDING" ? (
                   <div className="flex gap-2">
                     <Button size="sm" variant="secondary" onClick={() => setTarget({ id: row.id, kind: "pay" })}>Marcar como paga</Button>
-                    <Button size="sm" variant="ghost" onClick={() => setTarget({ id: row.id, kind: "cancel" })}>Cancelar</Button>
+                    <Button size="sm" variant="secondary" onClick={() => setTarget({ id: row.id, kind: "cancel" })}>Cancelar</Button>
                   </div>
                 ) : "—",
               },

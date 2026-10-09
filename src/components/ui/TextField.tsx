@@ -1,4 +1,7 @@
 import type { InputHTMLAttributes } from "react";
+import { DateField } from "@/components/forms/DateField";
+import { TimeField } from "@/components/forms/TimeField";
+import { fieldControlClass, fieldErrorClass, fieldIdleClass } from "@/components/forms/control";
 import { cx } from "@/lib/cx";
 
 type TextFieldProps = InputHTMLAttributes<HTMLInputElement> & {
@@ -8,7 +11,13 @@ type TextFieldProps = InputHTMLAttributes<HTMLInputElement> & {
   id: string;
 };
 
-export function TextField({ label, hint, error, id, className, ...props }: TextFieldProps) {
+export function TextField({ label, hint, error, id, className, type, ...props }: TextFieldProps) {
+  if (type === "date" || type === "datetime-local") {
+    return <DateField id={id} label={label} hint={hint} error={error} className={className} type={type} {...props} />;
+  }
+  if (type === "time") {
+    return <TimeField id={id} label={label} hint={hint} error={error} className={className} {...props} />;
+  }
   const describedBy = error ? `${id}-error` : hint ? `${id}-hint` : undefined;
 
   return (
@@ -20,11 +29,8 @@ export function TextField({ label, hint, error, id, className, ...props }: TextF
         id={id}
         aria-invalid={error ? true : undefined}
         aria-describedby={describedBy}
-        className={cx(
-          "h-11 rounded-sm border bg-surface-raised px-3 text-base text-foreground transition-colors placeholder:text-subtle",
-          error ? "border-danger" : "border-border",
-          className,
-        )}
+        className={cx(fieldControlClass, "h-11", error ? fieldErrorClass : fieldIdleClass, className)}
+        type={type}
         {...props}
       />
       {error ? (
@@ -38,4 +44,8 @@ export function TextField({ label, hint, error, id, className, ...props }: TextF
       ) : null}
     </div>
   );
+}
+
+export function SearchField({ className, ...props }: InputHTMLAttributes<HTMLInputElement>) {
+  return <input className={cx(fieldControlClass, "h-11", fieldIdleClass, className)} {...props} />;
 }

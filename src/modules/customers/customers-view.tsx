@@ -10,13 +10,13 @@ import { PaginationBar } from "@/components/data-display/PaginationBar";
 import { ActiveBadge } from "@/components/data-display/StatusBadge";
 import { ConfirmDialog } from "@/components/feedback/ConfirmDialog";
 import { EmptyState, ErrorState, ForbiddenState, LoadingState } from "@/components/feedback/States";
-import { TextAreaField } from "@/components/forms/Fields";
+import { SelectField, TextAreaField } from "@/components/forms/Fields";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { Dialog } from "@/components/overlay/Dialog";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { DataTable } from "@/components/ui/DataTable";
-import { TextField } from "@/components/ui/TextField";
+import { SearchField, TextField } from "@/components/ui/TextField";
 import { api, toSearch } from "@/lib/api/client";
 import { ApiError } from "@/lib/api/errors";
 import { formatDate, formatMoney, omitEmpty } from "@/lib/format";
@@ -77,7 +77,7 @@ export function CustomersView() {
           ) : null
         }
       />
-      <div className="flex flex-col gap-3 sm:flex-row">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-end">
         <form
           className="flex flex-1 gap-2"
           onSubmit={(event) => {
@@ -86,30 +86,16 @@ export function CustomersView() {
             listing.setParams({ q: String(data.get("q") ?? "") || null });
           }}
         >
-          <input
-            key={listing.q}
-            name="q"
-            defaultValue={listing.q}
-            aria-label="Buscar clientes"
-            placeholder="Nome, e-mail ou telefone"
-            className="h-11 w-full rounded-sm border border-border bg-surface-raised px-3"
-          />
+          <SearchField key={listing.q} name="q" defaultValue={listing.q} aria-label="Buscar clientes" placeholder="Nome, e-mail ou telefone" />
           <Button type="submit" variant="secondary">
             Buscar
           </Button>
         </form>
-        <label className="grid gap-1 text-sm">
-          <span className="font-medium">Status</span>
-          <select
-            className="h-11 rounded-sm border border-border bg-surface-raised px-3"
-            value={listing.active}
-            onChange={(event) => listing.setParams({ active: event.target.value || null })}
-          >
-            <option value="">Todos</option>
-            <option value="true">Ativos</option>
-            <option value="false">Inativos</option>
-          </select>
-        </label>
+        <SelectField id="customer-status" label="Status" className="w-full sm:w-44" value={listing.active} onChange={(event) => listing.setParams({ active: event.target.value || null })}>
+          <option value="">Todos</option>
+          <option value="true">Ativos</option>
+          <option value="false">Inativos</option>
+        </SelectField>
       </div>
       {query.isLoading ? <LoadingState /> : null}
       {query.isError ? (
@@ -145,7 +131,7 @@ export function CustomersView() {
                   canManage ? (
                     <div className="flex gap-2">
                       <Button size="sm" variant="secondary" onClick={() => setEditing(row)}>Editar</Button>
-                      <Button size="sm" variant="ghost" onClick={() => setConfirm(row)}>{row.isActive ? "Desativar" : "Ativar"}</Button>
+                      <Button size="sm" variant="secondary" onClick={() => setConfirm(row)}>{row.isActive ? "Desativar" : "Ativar"}</Button>
                     </div>
                   ) : (
                     "—"

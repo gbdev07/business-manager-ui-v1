@@ -64,11 +64,11 @@ export function SalesView() {
   return (
     <section className="grid gap-6">
       <PageHeader title="Vendas" description="Vendas registradas no negócio." actions={canManage ? <Button onClick={() => setOpen(true)}>Nova venda</Button> : null} />
-      <select aria-label="Status da venda" className="h-11 max-w-xs rounded-sm border border-border bg-surface-raised px-3" value={listing.status} onChange={(event) => listing.setParams({ status: event.target.value || null })}>
+      <SelectField id="sale-status" aria-label="Status da venda" className="max-w-xs" value={listing.status} onChange={(event) => listing.setParams({ status: event.target.value || null })}>
         <option value="">Todos os status</option>
         <option value="COMPLETED">Concluídas</option>
         <option value="CANCELLED">Canceladas</option>
-      </select>
+      </SelectField>
       {query.isLoading ? <LoadingState /> : null}
       {query.isError ? <ErrorState title="Não foi possível carregar as vendas." description={query.error instanceof ApiError ? query.error.message : "Falha de conexão."} onRetry={() => query.refetch()} /> : null}
       {query.data?.data.length === 0 ? <EmptyState title="Nenhuma venda encontrada" description="As vendas concluídas aparecem nesta lista." /> : null}
@@ -79,7 +79,7 @@ export function SalesView() {
             { key: "items", header: "Itens", render: (row) => row.items.map((item) => item.description).join(", ") },
             { key: "total", header: "Total", render: (row) => formatMoney(row.total) },
             { key: "status", header: "Status", render: (row) => <StatusBadge status={row.status} labels={saleStatusLabel} /> },
-            { key: "actions", header: "Ações", render: (row) => canManage && row.status === "COMPLETED" ? <Button size="sm" variant="ghost" onClick={() => setCancelId(row.id)}>Cancelar</Button> : "—" },
+            { key: "actions", header: "Ações", render: (row) => canManage && row.status === "COMPLETED" ? <Button size="sm" variant="secondary" onClick={() => setCancelId(row.id)}>Cancelar</Button> : "—" },
           ]} />
           <PaginationBar page={query.data.meta.page} totalPages={query.data.meta.totalPages} total={query.data.meta.total} onPage={(page) => listing.setParams({ page: String(page) })} />
         </Card>

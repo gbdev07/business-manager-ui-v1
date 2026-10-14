@@ -18,6 +18,31 @@ export const forgotPasswordSchema = z.object({
   email: z.string().trim().regex(emailPattern, "Informe um e-mail válido."),
 });
 
+export const resetPasswordSchema = z
+  .object({
+    newPassword: passwordSchema,
+    confirmPassword: z.string().min(1, "Confirme a nova senha."),
+  })
+  .refine((value) => value.newPassword === value.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "As senhas não coincidem.",
+  });
+
+export const changePasswordSchema = z
+  .object({
+    currentPassword: z.string().min(1, "Informe a senha atual."),
+    newPassword: passwordSchema,
+    confirmPassword: z.string().min(1, "Confirme a nova senha."),
+  })
+  .refine((value) => value.newPassword === value.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "As senhas não coincidem.",
+  })
+  .refine((value) => value.newPassword !== value.currentPassword, {
+    path: ["newPassword"],
+    message: "A nova senha precisa ser diferente da atual.",
+  });
+
 export const registerSchema = z.object({
   businessName: z.string().trim().min(2, "Informe o nome do negócio.").max(120),
   businessType: z.enum(["BARBERSHOP", "SALON", "RETAIL", "SERVICES", "OTHER"]),

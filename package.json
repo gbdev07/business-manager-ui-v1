@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "test": "node --experimental-strip-types --import ./scripts/register-ts.mjs --test src/lib/permissions.test.ts src/lib/api/errors.test.ts src/lib/safe-next.test.ts src/lib/auth/forgot-password.test.ts src/config/navigation.test.ts src/lib/validations/schemas.test.ts",
+    "test": "node --experimental-strip-types --import ./scripts/register-ts.mjs --test src/lib/permissions.test.ts src/lib/api/errors.test.ts src/lib/safe-next.test.ts src/lib/auth/forgot-password.test.ts src/lib/auth/reset-password.test.ts src/lib/auth/change-password.test.ts src/modules/settings/change-password-form.test.ts src/config/navigation.test.ts src/lib/validations/schemas.test.ts",
     "generate:logos": "node scripts/generate-logos.mjs"
   },
   "dependencies": {

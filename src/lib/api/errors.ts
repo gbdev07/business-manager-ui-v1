@@ -50,6 +50,15 @@ function extractMessage(payload: unknown) {
 }
 
 function translateKnown(message: string) {
+  if (/current password is incorrect/i.test(message)) {
+    return "A senha atual está incorreta.";
+  }
+  if (/different from the current password/i.test(message)) {
+    return "A nova senha precisa ser diferente da atual.";
+  }
+  if (/must match/i.test(message)) {
+    return "As senhas não coincidem.";
+  }
   if (/password must contain/i.test(message)) {
     return "A senha precisa ter letra maiúscula, minúscula e um número.";
   }

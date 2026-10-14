@@ -56,6 +56,7 @@ const crumbs: Record<string, string> = {
   users: "Usuários",
   notifications: "Notificações",
   settings: "Configurações",
+  security: "Segurança",
   barbershop: "Barbearia",
   barbers: "Profissionais",
   appointments: "Agendamentos",
@@ -189,6 +190,9 @@ export function Header({
         </summary>
         <div className="absolute right-0 z-20 mt-2 w-56 rounded-sm border border-border bg-surface-raised p-2 shadow-[var(--koda-shadow-md)]">
           <p className="px-2 py-1 text-xs text-muted">{user.email}</p>
+          <Link href="/settings/security" className="block rounded-sm px-2 py-2 text-sm hover:bg-surface">
+            Segurança
+          </Link>
           <Link href="/settings" className="block rounded-sm px-2 py-2 text-sm hover:bg-surface">
             Configurações
           </Link>

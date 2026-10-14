@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { customerSchema, forgotPasswordSchema, loginSchema, passwordSchema } from "./schemas";
+import { changePasswordSchema, customerSchema, forgotPasswordSchema, loginSchema, passwordSchema, resetPasswordSchema } from "./schemas";
 
 describe("validação dos formulários", () => {
   it("rejeita login sem e-mail válido", () => {
@@ -11,6 +11,21 @@ describe("validação dos formulários", () => {
   it("exige e-mail válido para recuperar a senha", () => {
     assert.equal(forgotPasswordSchema.safeParse({ email: "ana" }).success, false);
     assert.equal(forgotPasswordSchema.safeParse({ email: "  ana@koda.com  " }).success, true);
+  });
+
+  it("exige senha forte e confirmação igual para redefinir a senha", () => {
+    assert.equal(resetPasswordSchema.safeParse({ newPassword: "", confirmPassword: "" }).success, false);
+    assert.equal(resetPasswordSchema.safeParse({ newPassword: "senhafraca", confirmPassword: "senhafraca" }).success, false);
+    assert.equal(resetPasswordSchema.safeParse({ newPassword: "Senha123", confirmPassword: "Senha124" }).success, false);
+    assert.equal(resetPasswordSchema.safeParse({ newPassword: "Senha123", confirmPassword: "Senha123" }).success, true);
+  });
+
+  it("exige a senha atual, a política e uma confirmação diferente na troca", () => {
+    assert.equal(changePasswordSchema.safeParse({ currentPassword: "", newPassword: "", confirmPassword: "" }).success, false);
+    assert.equal(changePasswordSchema.safeParse({ currentPassword: "Senha123", newPassword: "fraca", confirmPassword: "fraca" }).success, false);
+    assert.equal(changePasswordSchema.safeParse({ currentPassword: "Senha123", newPassword: "Senha1234", confirmPassword: "Senha1235" }).success, false);
+    assert.equal(changePasswordSchema.safeParse({ currentPassword: "Senha123", newPassword: "Senha123", confirmPassword: "Senha123" }).success, false);
+    assert.equal(changePasswordSchema.safeParse({ currentPassword: "Senha123", newPassword: "NovaSenha123", confirmPassword: "NovaSenha123" }).success, true);
   });
 
   it("exige senha forte no mesmo critério da API", () => {

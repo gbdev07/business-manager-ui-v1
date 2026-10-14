@@ -1,13 +1,14 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { useForm } from "react-hook-form";
 import { Logo } from "@/components/brand/Logo";
 import { Alert } from "@/components/ui/Alert";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { TextField } from "@/components/ui/TextField";
+import { loginNoticeMessage } from "@/lib/auth/change-password";
 import { loginSchema } from "@/lib/validations/schemas";
 import { safeNextPath } from "@/lib/safe-next";
 import Link from "next/link";
@@ -18,7 +19,12 @@ type LoginValues = {
   password: string;
 };
 
+function loginNotice() {
+  return loginNoticeMessage(window.location.search) ?? "";
+}
+
 export function LoginForm() {
+  const notice = useSyncExternalStore(() => () => undefined, loginNotice, () => "");
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const form = useForm<LoginValues>({ resolver: zodResolver(loginSchema), defaultValues: { email: "", password: "" } });
@@ -49,6 +55,11 @@ export function LoginForm() {
         <p className="mt-1 text-sm text-muted">Acesse o negócio vinculado à sua conta.</p>
         <Card className="mt-6">
           <form className="grid gap-4" onSubmit={form.handleSubmit(onSubmit)} noValidate>
+            {notice ? (
+              <Alert tone="success" title="Senha alterada">
+                {notice}
+              </Alert>
+            ) : null}
             {error ? (
               <Alert tone="danger" title="Não foi possível entrar">
                 {error}

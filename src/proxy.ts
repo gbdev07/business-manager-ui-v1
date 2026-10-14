@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { ACCESS_COOKIE, REFRESH_COOKIE } from "@/lib/auth/cookies";
+import { pathWithoutResetToken } from "@/lib/auth/reset-password";
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -16,7 +17,7 @@ export function proxy(request: NextRequest) {
   }
 
   const headers = new Headers(request.headers);
-  headers.set("x-koda-path", `${pathname}${request.nextUrl.search}`);
+  headers.set("x-koda-path", pathWithoutResetToken(pathname, request.nextUrl.search));
   return NextResponse.next({ request: { headers } });
 }
 
@@ -25,5 +26,5 @@ export const config = {
 };
 
 function isPublic(pathname: string) {
-  return pathname === "/login" || pathname === "/register" || pathname === "/forgot-password" || pathname.startsWith("/marca") || pathname.startsWith("/api/");
+  return pathname === "/login" || pathname === "/register" || pathname === "/forgot-password" || pathname === "/reset-password" || pathname.startsWith("/marca") || pathname.startsWith("/api/");
 }

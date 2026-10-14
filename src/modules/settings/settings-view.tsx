@@ -2,6 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNotify, useSession } from "@/components/app/providers";
@@ -9,7 +10,7 @@ import { StatusBadge } from "@/components/data-display/StatusBadge";
 import { ErrorState, ForbiddenState, LoadingState } from "@/components/feedback/States";
 import { Checkbox } from "@/components/forms/Fields";
 import { PageHeader } from "@/components/layout/PageHeader";
-import { Button } from "@/components/ui/Button";
+import { Button, buttonClass } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { TextField } from "@/components/ui/TextField";
 import { api } from "@/lib/api/client";
@@ -54,6 +55,15 @@ export function SettingsView() {
       <Card className="grid gap-2 text-sm">
         <p>Segmento: {businessTypeLabel[current.businessType]}</p>
         <p>Situação: <StatusBadge status={current.status} labels={tenantStatusLabel} /></p>
+      </Card>
+      <Card className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h2 className="text-base font-semibold">Segurança da conta</h2>
+          <p className="mt-1 text-sm text-muted">Altere a senha usada para entrar.</p>
+        </div>
+        <Link href="/settings/security" className={buttonClass("secondary")}>
+          Segurança
+        </Link>
       </Card>
       <TenantForm tenant={current} canManage={canManage} />
       {current.businessType === "BARBERSHOP" ? <HoursForm canManage={hasPermission(user.permissions, "barbershop.settings:manage")} /> : null}

@@ -80,5 +80,8 @@ function translateKnown(message: string) {
   if (/Cannot cancel/i.test(message)) {
     return "Esta assinatura não pode ser cancelada no status atual.";
   }
+  if (/do not have access to this tenant/i.test(message)) {
+    return "Você não tem acesso a esta empresa.";
+  }
   return undefined;
 }

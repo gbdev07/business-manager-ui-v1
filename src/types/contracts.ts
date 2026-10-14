@@ -43,6 +43,16 @@ export type AuthResponse = {
   user: AuthUser;
 };
 
+export type AccessibleTenant = {
+  id: string;
+  name: string;
+  slug: string;
+  status: TenantStatus;
+  businessType: BusinessType;
+  role: string;
+  isCurrent: boolean;
+};
+
 export type Tenant = {
   id: string;
   name: string;

@@ -10,7 +10,7 @@ type SessionResult =
   | { kind: "refresh" }
   | { kind: "anonymous" };
 
-let refreshing: Promise<boolean> | null = null;
+let refreshing: Promise<string | null> | null = null;
 
 export async function persistAuth(body: AuthResponse) {
   const jar = await cookies();
@@ -25,6 +25,10 @@ export async function clearAuth() {
 }
 
 export function refreshSession() {
+  return refreshAccessToken().then((token) => token !== null);
+}
+
+export function refreshAccessToken() {
   refreshing ??= performRefresh().finally(() => {
     refreshing = null;
   });
@@ -61,7 +65,7 @@ export async function proxyBackend(path: string, request: Request) {
 async function performRefresh() {
   const jar = await cookies();
   const refreshToken = jar.get(REFRESH_COOKIE)?.value;
-  if (!refreshToken) return false;
+  if (!refreshToken) return null;
 
   try {
     const response = await fetch(apiUrl("auth/refresh"), {
@@ -72,13 +76,13 @@ async function performRefresh() {
     });
     if (!response.ok) {
       await clearAuth();
-      return false;
+      return null;
     }
     const body = (await response.json()) as AuthResponse;
     await persistAuth(body);
-    return true;
+    return body.accessToken;
   } catch {
-    return false;
+    return null;
   }
 }
 
@@ -135,5 +139,5 @@ async function authorizedGet<T>(path: string, access: string) {
 }
 
 function isSensitivePath(path: string) {
-  return /^auth\/(login|register|refresh|logout|forgot-password|reset-password)$/.test(path);
+  return /^auth\/(login|register|refresh|logout|forgot-password|reset-password)$/.test(path) || path === "auth/tenants/switch";
 }

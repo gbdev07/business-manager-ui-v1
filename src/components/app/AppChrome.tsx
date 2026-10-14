@@ -19,6 +19,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import Link from "next/link";
+import { useQueryClient } from "@tanstack/react-query";
 import { usePathname, useRouter } from "next/navigation";
 import { Logo } from "@/components/brand/Logo";
 import { ThemeToggle } from "@/components/brand/ThemeToggle";
@@ -27,6 +28,8 @@ import type { NavIcon } from "@/config/navigation";
 import { visibleNavigation, navigation } from "@/config/navigation";
 import { businessTypeLabel } from "@/lib/labels";
 import { cx } from "@/lib/cx";
+import { TenantSwitcher } from "@/components/app/TenantSwitcher";
+import { dropTenantCache } from "@/lib/auth/tenant-context";
 import { hasPermission } from "@/lib/permissions";
 
 const icons: Record<NavIcon, LucideIcon> = {
@@ -147,10 +150,12 @@ export function Header({
 }) {
   const pathname = usePathname();
   const router = useRouter();
-  const { user, tenant } = useSession();
+  const queryClient = useQueryClient();
+  const { user } = useSession();
   const parts = pathname.split("/").filter(Boolean);
 
   async function logout() {
+    await dropTenantCache(queryClient);
     await fetch("/api/auth/logout", { method: "POST" });
     router.push("/login");
     router.refresh();
@@ -168,7 +173,9 @@ export function Header({
       </button>
       <nav aria-label="Trilha" className="min-w-0 flex-1">
         <ol className="flex flex-wrap items-center gap-2 text-sm text-muted">
-          <li className="truncate font-medium text-foreground">{tenant?.name ?? "KODA"}</li>
+          <li className="min-w-0 font-medium text-foreground">
+            <TenantSwitcher />
+          </li>
           {parts.map((part, index) => (
             <li key={`${part}-${index}`} className="flex items-center gap-2">
               <span aria-hidden>/</span>

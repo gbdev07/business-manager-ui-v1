@@ -18,6 +18,8 @@ A lista abaixo foi conferida no código do NestJS em `business-manager-v1`. O fr
 | POST | `/auth/refresh` | Renova os tokens no servidor |
 | POST | `/auth/logout` | Encerra a sessão |
 | GET | `/auth/me` | Usuário, papel, permissões e tipo de negócio |
+| GET | `/auth/tenants` | Empresas acessíveis e a empresa da sessão |
+| POST | `/auth/tenants/switch` | Troca a sessão para outra empresa e emite novos tokens |
 | GET | `/tenants/current` | Negócio atual |
 | PATCH | `/tenants/current` | Nome, documento, e-mail, telefone, fuso e moeda |
 | GET | `/dashboard` | Indicadores do período |
@@ -64,7 +66,6 @@ Paginação: `{ data, meta: { page, limit, total, totalPages } }`. Valores monet
 
 ## Não existem na API
 
-- Lista de tenants e troca de contexto
 - Série temporal ou feed de atividade do painel
 - Lista, leitura ou envio de notificações
 - Exclusão física de clientes, usuários ou profissionais

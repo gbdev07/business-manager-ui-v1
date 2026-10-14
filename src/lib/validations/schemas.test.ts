@@ -1,11 +1,16 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { customerSchema, loginSchema, passwordSchema } from "./schemas";
+import { customerSchema, forgotPasswordSchema, loginSchema, passwordSchema } from "./schemas";
 
 describe("validação dos formulários", () => {
   it("rejeita login sem e-mail válido", () => {
     assert.equal(loginSchema.safeParse({ email: "ana", password: "x" }).success, false);
     assert.equal(loginSchema.safeParse({ email: "ana@koda.com", password: "senha" }).success, true);
+  });
+
+  it("exige e-mail válido para recuperar a senha", () => {
+    assert.equal(forgotPasswordSchema.safeParse({ email: "ana" }).success, false);
+    assert.equal(forgotPasswordSchema.safeParse({ email: "  ana@koda.com  " }).success, true);
   });
 
   it("exige senha forte no mesmo critério da API", () => {

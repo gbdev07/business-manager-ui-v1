@@ -12,6 +12,7 @@ A lista abaixo foi conferida no código do NestJS em `business-manager-v1`. O fr
 | --- | --- | --- |
 | POST | `/auth/register` | Cria o negócio e a sessão |
 | POST | `/auth/login` | Entra com e-mail e senha |
+| POST | `/auth/forgot-password` | Pede o link de redefinição. A resposta é sempre genérica |
 | POST | `/auth/refresh` | Renova os tokens no servidor |
 | POST | `/auth/logout` | Encerra a sessão |
 | GET | `/auth/me` | Usuário, papel, permissões e tipo de negócio |
@@ -61,8 +62,8 @@ Paginação: `{ data, meta: { page, limit, total, totalPages } }`. Valores monet
 
 ## Não existem na API
 
-- Recuperação de senha
-- Alteração de senha de um usuário já cadastrado
+- Tela para definir a nova senha com o token de `/auth/reset-password`
+- Alteração de senha de um usuário já autenticado
 - Lista de tenants e troca de contexto
 - Série temporal ou feed de atividade do painel
 - Lista, leitura ou envio de notificações

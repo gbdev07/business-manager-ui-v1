@@ -223,7 +223,7 @@ function SubscriptionDialog({ onClose }: { onClose: () => void }) {
           <option value="">Selecione</option>
           {customers.data?.data.map((customer) => <option key={customer.id} value={customer.id}>{customer.name}</option>)}
         </SelectField>
-        <TextField id="sub-start" label="Início" type="date" hint="Opcional. Sem data, a API usa o momento atual." {...form.register("startDate")} />
+        <TextField id="sub-start" label="Início" type="date" hint="Opcional. Sem data, o sistema registra o momento atual." {...form.register("startDate")} />
         <Checkbox label="Registrar preferência de renovação" {...form.register("autoRenew")} />
         <Button type="submit" disabled={mutation.isPending}>{mutation.isPending ? "Salvando…" : "Criar assinatura"}</Button>
       </form>

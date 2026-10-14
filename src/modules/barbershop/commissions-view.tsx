@@ -59,7 +59,7 @@ export function CommissionsView() {
 
   return (
     <section className="grid gap-8">
-      <PageHeader title="Comissões" description="Regras e comissões calculadas pela API. O pagamento registrado aqui não transfere dinheiro para um banco." actions={canManage ? <Button onClick={() => setOpen(true)}>Nova regra</Button> : null} />
+      <PageHeader title="Comissões" description="Regras e comissões calculadas pelo sistema. O pagamento registrado aqui não transfere dinheiro para um banco." actions={canManage ? <Button onClick={() => setOpen(true)}>Nova regra</Button> : null} />
       <div className="grid gap-3">
         <h2 className="text-lg font-semibold">Regras</h2>
         {rules.isLoading ? <LoadingState /> : null}
@@ -89,7 +89,7 @@ export function CommissionsView() {
         ) : null}
         {commissions.isLoading ? <LoadingState /> : null}
         {commissions.isError ? <ErrorState title="Não foi possível carregar as comissões." description={commissions.error instanceof ApiError ? commissions.error.message : "Falha de conexão."} onRetry={() => commissions.refetch()} /> : null}
-        {commissions.data?.data.length === 0 ? <EmptyState title="Nenhuma comissão" description="Os lançamentos gerados pela API aparecem aqui." /> : null}
+        {commissions.data?.data.length === 0 ? <EmptyState title="Nenhuma comissão" description="Os lançamentos gerados pelo sistema aparecem aqui." /> : null}
         {commissions.data && commissions.data.data.length > 0 ? (
           <Card className="grid gap-4">
             <DataTable caption="Comissões" rows={commissions.data.data} columns={[

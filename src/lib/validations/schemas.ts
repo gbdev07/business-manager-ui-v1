@@ -14,6 +14,10 @@ export const loginSchema = z.object({
   password: z.string().min(1, "Informe a senha."),
 });
 
+export const forgotPasswordSchema = z.object({
+  email: z.string().trim().regex(emailPattern, "Informe um e-mail válido."),
+});
+
 export const registerSchema = z.object({
   businessName: z.string().trim().min(2, "Informe o nome do negócio.").max(120),
   businessType: z.enum(["BARBERSHOP", "SALON", "RETAIL", "SERVICES", "OTHER"]),

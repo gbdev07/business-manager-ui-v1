@@ -13,7 +13,8 @@ type TextFieldProps = InputHTMLAttributes<HTMLInputElement> & {
 
 export function TextField({ label, hint, error, id, className, type, ...props }: TextFieldProps) {
   if (type === "date" || type === "datetime-local") {
-    return <DateField id={id} label={label} hint={hint} error={error} className={className} type={type} {...props} />;
+    const dateType = type === "datetime-local" ? "datetime-local" : "date";
+    return <DateField id={id} label={label} hint={hint} error={error} className={className} {...props} type={dateType} />;
   }
   if (type === "time") {
     return <TimeField id={id} label={label} hint={hint} error={error} className={className} {...props} />;

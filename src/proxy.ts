@@ -5,7 +5,7 @@ export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const hasSession = Boolean(request.cookies.get(ACCESS_COOKIE)?.value || request.cookies.get(REFRESH_COOKIE)?.value);
 
-  if ((pathname === "/login" || pathname === "/register") && hasSession) {
+  if ((pathname === "/login" || pathname === "/register" || pathname === "/forgot-password") && hasSession) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
 
@@ -25,5 +25,5 @@ export const config = {
 };
 
 function isPublic(pathname: string) {
-  return pathname === "/login" || pathname === "/register" || pathname.startsWith("/marca") || pathname.startsWith("/api/");
+  return pathname === "/login" || pathname === "/register" || pathname === "/forgot-password" || pathname.startsWith("/marca") || pathname.startsWith("/api/");
 }

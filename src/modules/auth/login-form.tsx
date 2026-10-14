@@ -56,6 +56,11 @@ export function LoginForm() {
             ) : null}
             <TextField id="email" label="E-mail" type="email" autoComplete="username" error={form.formState.errors.email?.message} {...form.register("email")} />
             <TextField id="password" label="Senha" type="password" autoComplete="current-password" error={form.formState.errors.password?.message} {...form.register("password")} />
+            <p className="text-right text-sm">
+              <Link href="/forgot-password" className="font-medium text-primary-text">
+                Esqueceu sua senha?
+              </Link>
+            </p>
             <Button type="submit" disabled={form.formState.isSubmitting}>
               {form.formState.isSubmitting ? "Entrando…" : "Entrar"}
             </Button>

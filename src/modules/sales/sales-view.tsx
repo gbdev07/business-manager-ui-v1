@@ -85,7 +85,7 @@ export function SalesView() {
         </Card>
       ) : null}
       {open ? <SaleDialog onClose={() => setOpen(false)} /> : null}
-      <ConfirmDialog open={Boolean(cancelId)} title="Cancelar venda" description="A venda será cancelada na API. Esta ação não gera estorno automático." confirmLabel="Cancelar venda" pending={cancel.isPending} onClose={() => setCancelId(null)} onConfirm={() => cancelId && cancel.mutate(cancelId)} />
+      <ConfirmDialog open={Boolean(cancelId)} title="Cancelar venda" description="A venda será cancelada. Esta ação não gera estorno automático." confirmLabel="Cancelar venda" pending={cancel.isPending} onClose={() => setCancelId(null)} onConfirm={() => cancelId && cancel.mutate(cancelId)} />
     </section>
   );
 }

@@ -135,5 +135,5 @@ async function authorizedGet<T>(path: string, access: string) {
 }
 
 function isSensitivePath(path: string) {
-  return /^auth\/(login|register|refresh|logout)$/.test(path);
+  return /^auth\/(login|register|refresh|logout|forgot-password)$/.test(path);
 }
